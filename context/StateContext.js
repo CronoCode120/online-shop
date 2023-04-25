@@ -29,6 +29,7 @@ const StateContext = ({ children }) => {
                 storedQuantities += item.quantity;
             });
             setTotalPrice(storedPrice);
+            console.log(totalPrice);
             setTotalQuantities(storedQuantities);
         }
 
@@ -48,6 +49,7 @@ const StateContext = ({ children }) => {
                     storedQuantities += item.quantity;
                 });
                 setTotalPrice(storedPrice);
+                console.log(totalPrice);
                 setTotalQuantities(storedQuantities);
             }
         }
