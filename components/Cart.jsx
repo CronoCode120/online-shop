@@ -10,7 +10,7 @@ import { toast } from 'react-hot-toast';
 
 const Cart = () => {
 
-  const { setShowCart, cartItems, totalPrice, totalQuantities, removeFromCart, toggleCartItemQty } = useStateContext()
+  const { setShowCart, cartItems, totalPrice, totalQuantities, removeFromCart, toggleCartItemQty, calculateDiscount } = useStateContext()
 
   const handleCheckout = async () => {
     const stripe = await getStripe();
