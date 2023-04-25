@@ -76,10 +76,11 @@ const StateContext = ({ children }) => {
             setCartItems([...cartItems, {...product}]);
         }
         setTotalPrice(prevTotalPrice => {
+            let newPrice;
             if(product.discount) {
-                let newPrice = prevTotalPrice + Number(calculateDiscount(product.price, product.discount)) * product.quantity;
+                newPrice = prevTotalPrice + Number(calculateDiscount(product.price, product.discount)) * product.quantity;
             } else {
-                let newPrice = prevTotalPrice + Number(product.price.toFixed(2)) * product.quantity;
+                newPrice = prevTotalPrice + Number(product.price.toFixed(2)) * product.quantity;
             }
                 return Number(newPrice.toFixed(2));
         });
@@ -101,10 +102,11 @@ const StateContext = ({ children }) => {
         setCartItems(updatedCartItems);
 
         setTotalPrice(prevTotalPrice => {
+            let newPrice;
             if(product.discount) {
-                let newPrice = prevTotalPrice - Number(calculateDiscount(product.price, product.discount)) * product.quantity;
+                newPrice = prevTotalPrice - Number(calculateDiscount(product.price, product.discount)) * product.quantity;
             } else {
-                let newPrice = prevTotalPrice - product.price * product.quantity;
+                newPrice = prevTotalPrice - product.price * product.quantity;
             }
             return Number(newPrice.toFixed(2));
         });
@@ -119,10 +121,11 @@ const StateContext = ({ children }) => {
             if (item.quantity > 1) {
                 setTotalQuantities(prevTotalQuantities => --prevTotalQuantities);
                 setTotalPrice(prevTotalPrice => {
+                    let newPrice;
                     if(foundProduct.discount) {
-                        let newPrice = prevTotalPrice - Number(calculateDiscount(foundProduct.price, foundProduct.discount));
+                        newPrice = prevTotalPrice - Number(calculateDiscount(foundProduct.price, foundProduct.discount));
                     } else {
-                        let newPrice = prevTotalPrice - foundProduct.price;
+                        newPrice = prevTotalPrice - foundProduct.price;
                     }
                     return Number(newPrice.toFixed(2));
                 });
@@ -134,10 +137,11 @@ const StateContext = ({ children }) => {
         } else if (value == 'inc') {
             setTotalQuantities(prevTotalQuantities => ++prevTotalQuantities);
             setTotalPrice(prevTotalPrice => {
+                let newPrice;
                 if(foundProduct.discount) {
-                    let newPrice = prevTotalPrice + Number(calculateDiscount(foundProduct.price, foundProduct.discount));
+                    newPrice = prevTotalPrice + Number(calculateDiscount(foundProduct.price, foundProduct.discount));
                 } else {
-                    let newPrice = prevTotalPrice + foundProduct.price;
+                    newPrice = prevTotalPrice + foundProduct.price;
                 }
                 return Number(newPrice.toFixed(2));
             });
