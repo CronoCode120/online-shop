@@ -90,7 +90,7 @@ const Cart = () => {
           <div className='pay-panel'>
             <span>
               <p>Subtotal: </p>
-              <p>${totalPrice}</p>
+              <p>${totalPrice.toFixed(2)}</p>
             </span>
             <button type='button' onClick={handleCheckout}>Pay now</button>
           </div>
