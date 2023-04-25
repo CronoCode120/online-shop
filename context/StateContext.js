@@ -21,7 +21,11 @@ const StateContext = ({ children }) => {
             let storedPrice = 0;
             let storedQuantities = 0;
             storedCartItems.forEach(item => {
-                storedPrice += Math.round(item.price * item.quantity * 100) / 100;
+                if(item.discount) {
+                    storedPrice += Math.round(Number(calculateDiscount(item.price, item.discount)) * item.quantity * 100) / 100;
+                } else {
+                    storedPrice += Math.round(item.price * item.quantity * 100) / 100;
+                }
                 storedQuantities += item.quantity;
             });
             setTotalPrice(storedPrice);
@@ -36,7 +40,11 @@ const StateContext = ({ children }) => {
                 let storedPrice = 0;
                 let storedQuantities = 0;
                 storedCartItems.forEach(item => {
-                    storedPrice += Math.round(item.price * item.quantity * 100) / 100;
+                    if(item.discount) {
+                        storedPrice += Math.round(Number(calculateDiscount(item.price, item.discount)) * item.quantity * 100) / 100;
+                    } else {
+                        storedPrice += Math.round(item.price * item.quantity * 100) / 100;
+                    }
                     storedQuantities += item.quantity;
                 });
                 setTotalPrice(storedPrice);
@@ -68,8 +76,12 @@ const StateContext = ({ children }) => {
             setCartItems([...cartItems, {...product}]);
         }
         setTotalPrice(prevTotalPrice => {
-            let newPrice = prevTotalPrice + Number(product.price.toFixed(2)) * product.quantity;
-            return Number(newPrice.toFixed(2));
+            if(product.discount) {
+                let newPrice = prevTotalPrice + Number(calculateDiscount(product.price, product.discount)) * product.quantity;
+            } else {
+                let newPrice = prevTotalPrice + Number(product.price.toFixed(2)) * product.quantity;
+            }
+                return Number(newPrice.toFixed(2));
         });
         setTotalQuantities(prevTotalQuantities => prevTotalQuantities + quantity);
 
@@ -89,7 +101,11 @@ const StateContext = ({ children }) => {
         setCartItems(updatedCartItems);
 
         setTotalPrice(prevTotalPrice => {
-            let newPrice = prevTotalPrice - product.price * product.quantity;
+            if(product.discount) {
+                let newPrice = prevTotalPrice - Number(calculateDiscount(product.price, product.discount)) * product.quantity;
+            } else {
+                let newPrice = prevTotalPrice - product.price * product.quantity;
+            }
             return Number(newPrice.toFixed(2));
         });
         setTotalQuantities(prevTotalQuantities => prevTotalQuantities - product.quantity);
@@ -103,7 +119,11 @@ const StateContext = ({ children }) => {
             if (item.quantity > 1) {
                 setTotalQuantities(prevTotalQuantities => --prevTotalQuantities);
                 setTotalPrice(prevTotalPrice => {
-                    let newPrice = prevTotalPrice - foundProduct.price;
+                    if(foundProduct.discount) {
+                        let newPrice = prevTotalPrice - Number(calculateDiscount(foundProduct.price, foundProduct.discount));
+                    } else {
+                        let newPrice = prevTotalPrice - foundProduct.price;
+                    }
                     return Number(newPrice.toFixed(2));
                 });
 
@@ -114,7 +134,11 @@ const StateContext = ({ children }) => {
         } else if (value == 'inc') {
             setTotalQuantities(prevTotalQuantities => ++prevTotalQuantities);
             setTotalPrice(prevTotalPrice => {
-                let newPrice = prevTotalPrice + foundProduct.price;
+                if(foundProduct.discount) {
+                    let newPrice = prevTotalPrice + Number(calculateDiscount(foundProduct.price, foundProduct.discount));
+                } else {
+                    let newPrice = prevTotalPrice + foundProduct.price;
+                }
                 return Number(newPrice.toFixed(2));
             });
 
