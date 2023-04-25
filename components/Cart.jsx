@@ -10,7 +10,7 @@ import { toast } from 'react-hot-toast';
 
 const Cart = () => {
 
-  const { setShowCart, cartItems, totalPrice, totalQuantities, removeFromCart, toggleCartItemQty } = useStateContext()
+  const { setShowCart, cartItems, totalPrice, totalQuantities, removeFromCart, toggleCartItemQty, calculateDiscount } = useStateContext()
 
   const handleCheckout = async () => {
     const stripe = await getStripe();
@@ -70,7 +70,11 @@ const Cart = () => {
                   <div>
                     <div className='cart-item-details'>
                       <p>{item.name}</p>
-                      <p style={{'fontWeight':'600', 'fontFamily':'"Poppins", sans-serif', 'fontSize':'16px'}}>${item.price}</p>
+                      {item.discount ? (
+                        <p className='discount-container' style={{'fontWeight':'600', 'fontFamily':'"Poppins", sans-serif', 'fontSize':'16px', 'justifyContent':'flex-end !important'}}><span className='prev-price'>${item.price.toFixed(2)}</span><span className='discount-price'>${calculateDiscount(item.price, item.discount)}</span></p>
+                      ) : (
+                        <p style={{'fontWeight':'600', 'fontFamily':'"Poppins", sans-serif', 'fontSize':'16px'}}>${item.price}</p>
+                      )}
                       <div className='quant-selector'>
                         <FontAwesomeIcon icon={faCircleMinus} size='xl' onClick={() => toggleCartItemQty(item, 'dec')} style={{"userSelect": "none", "cursor": "pointer", 'color': 'white'}} />
                         <p className='qty'>{item.quantity}</p>

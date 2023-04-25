@@ -41,6 +41,11 @@ export default {
             title: "Category",
             type: "array",
             of: [{ type: "string" }]
+        },
+        {
+            name: "discount",
+            title: "Discount (percentage)",
+            type: "number",
         }
     ]
 };
