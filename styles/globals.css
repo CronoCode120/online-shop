@@ -609,6 +609,7 @@ body {
 .pay-panel {
   justify-content: space-between;
   padding: 20px 20px;
+  position:relative;
   bottom: 0;
   right: 0;
   width: 100%;
