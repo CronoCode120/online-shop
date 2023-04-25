@@ -22,13 +22,13 @@ const StateContext = ({ children }) => {
             let storedQuantities = 0;
             storedCartItems.forEach(item => {
                 if(item.discount) {
-                    storedPrice += Math.round(Number(calculateDiscount(item.price, item.discount)) * item.quantity * 100) / 100;
+                    storedPrice += Math.round(calculateDiscount(item.price, item.discount) * item.quantity * 100) / 100;
                 } else {
                     storedPrice += Math.round(item.price * item.quantity * 100) / 100;
                 }
                 storedQuantities += item.quantity;
             });
-            setTotalPrice(Number(storedPrice));
+            setTotalPrice(storedPrice);
             setTotalQuantities(storedQuantities);
         }
 
@@ -41,13 +41,13 @@ const StateContext = ({ children }) => {
                 let storedQuantities = 0;
                 storedCartItems.forEach(item => {
                     if(item.discount) {
-                        storedPrice += Math.round(Number(calculateDiscount(item.price, item.discount)) * item.quantity * 100) / 100;
+                        storedPrice += Math.round(calculateDiscount(item.price, item.discount) * item.quantity * 100) / 100;
                     } else {
                         storedPrice += Math.round(item.price * item.quantity * 100) / 100;
                     }
                     storedQuantities += item.quantity;
                 });
-                setTotalPrice(Number(storedPrice));
+                setTotalPrice(storedPrice);
                 setTotalQuantities(storedQuantities);
             }
         }
@@ -78,11 +78,11 @@ const StateContext = ({ children }) => {
         setTotalPrice(prevTotalPrice => {
             let newPrice;
             if(product.discount) {
-                newPrice = prevTotalPrice + Number(calculateDiscount(product.price, product.discount)) * product.quantity;
+                newPrice = prevTotalPrice + calculateDiscount(product.price, product.discount) * product.quantity;
             } else {
-                newPrice = prevTotalPrice + Number(product.price.toFixed(2)) * product.quantity;
+                newPrice = prevTotalPrice + Math.floor(product.price * 100) / 100 * product.quantity;
             }
-                return Number(newPrice.toFixed(2));
+                return newPrice;
         });
         setTotalQuantities(prevTotalQuantities => prevTotalQuantities + quantity);
 
@@ -105,11 +105,11 @@ const StateContext = ({ children }) => {
         setTotalPrice(prevTotalPrice => {
             let newPrice;
             if(product.discount) {
-                newPrice = prevTotalPrice - Number(calculateDiscount(product.price, product.discount)) * product.quantity;
+                newPrice = prevTotalPrice - calculateDiscount(product.price, product.discount) * product.quantity;
             } else {
                 newPrice = prevTotalPrice - product.price * product.quantity;
             }
-            return Number(newPrice.toFixed(2));
+            return newPrice;
         });
         setTotalQuantities(prevTotalQuantities => prevTotalQuantities - product.quantity);
     }
@@ -124,11 +124,11 @@ const StateContext = ({ children }) => {
                 setTotalPrice(prevTotalPrice => {
                     let newPrice;
                     if(foundProduct.discount) {
-                        newPrice = prevTotalPrice - Number(calculateDiscount(foundProduct.price, foundProduct.discount));
+                        newPrice = prevTotalPrice - calculateDiscount(foundProduct.price, foundProduct.discount);
                     } else {
                         newPrice = prevTotalPrice - foundProduct.price;
                     }
-                    return Number(newPrice.toFixed(2));
+                    return newPrice;
                 });
 
                 let updatedProduct = {...foundProduct, quantity: --foundProduct.quantity};
@@ -140,11 +140,11 @@ const StateContext = ({ children }) => {
             setTotalPrice(prevTotalPrice => {
                 let newPrice;
                 if(foundProduct.discount) {
-                    newPrice = prevTotalPrice + Number(calculateDiscount(foundProduct.price, foundProduct.discount));
+                    newPrice = prevTotalPrice + calculateDiscount(foundProduct.price, foundProduct.discount);
                 } else {
                     newPrice = prevTotalPrice + foundProduct.price;
                 }
-                return Number(newPrice.toFixed(2));
+                return newPrice;
             });
 
             let updatedProduct = {...foundProduct, quantity: ++foundProduct.quantity};
@@ -174,8 +174,8 @@ const StateContext = ({ children }) => {
     }
     
     const calculateDiscount = (price, discount) => {
-        let newPrice = Math.floor((price - (price / 100 * discount)) * 100) / 100;
-        return newPrice.toFixed(2);
+        let newPrice = Math.round((price - (price / 100 * discount)) * 100) / 100;
+        return newPrice;
     }
 
     return (
