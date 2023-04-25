@@ -8,9 +8,9 @@ import { useStateContext } from '@/context/StateContext';
 
 const ProductPage = ({ curProduct, products }) => {
 
-  const { image, price, details, name, _id } = curProduct;
+  const { image, price, details, name, _id, discount } = curProduct;
 
-  const { qty, incQty, decQty, setQty, addToCart } = useStateContext();
+  const { qty, incQty, decQty, setQty, addToCart, calculateDiscount } = useStateContext();
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -77,8 +77,15 @@ const ProductPage = ({ curProduct, products }) => {
           </div>
           <p style={{'fontFamily':'"Poppins", sans-serif', 'fontWeight': '600', 'margin-top':'40px'}}>Description:</p>
           <p style={{'fontFamily': '"Quicksand", sans-serif'}}>{details}</p>
-          <h2 style={{'fontFamily':'"Poppins", sans-serif'}}>${price.toFixed(2)}</h2>
-          <div>
+          {discount ? (
+            <div className='discount-container'>
+              <p className='prev-price' style={{'fontFamily':'"Poppins", sans-serif'}}>${price.toFixed(2)}</p>
+              <h2 className='discount-price' style={{'fontFamily':'"Poppins", sans-serif'}}>${calculateDiscount(price, discount)} <span style={{'color':'black'}}>(-{discount}%)</span></h2>
+            </div>
+          ) : (
+            <h2 style={{'fontFamily':'"Poppins", sans-serif'}}>${price.toFixed(2)}</h2>
+          )}
+          <div className='product-buttons'>
             <div className='quant-selector'>
               <FontAwesomeIcon icon={faSquareMinus} size='2xl' onClick={decQty} style={{"userSelect": "none", "cursor": "pointer"}} />
               <p className='qty'>{qty}</p>
