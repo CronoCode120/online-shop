@@ -94,7 +94,6 @@ const StateContext = ({ children }) => {
                 boxShadow: '0 0 5px 2px black'
             }
         });
-        console.log(totalPrice);
     }
 
     const removeFromCart = (product) => {
