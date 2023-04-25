@@ -1,8 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { urlFor } from '@/lib/client';
+import { useStateContext } from '@/context/StateContext';
 
-const Product = ({ product: { image, name, price, slug } }) => {
+const Product = ({ product: { image, name, price, slug, discount } }) => {
+  const { calculateDiscount } = useStateContext();
+  
   return (
     <div>
       <Link className='link' href={`/product/${slug.current}`}>
