@@ -7,7 +7,7 @@ import { useStateContext } from '@/context/StateContext';
 
 const ProductList = ({ searchKey, products }) => {
 
-  const { addToCart } = useStateContext();
+  const { addToCart, calculateDiscount } = useStateContext();
 
   const searcher = (searchString, product) => {
     let regExp = new RegExp(searchString, 'ig');
