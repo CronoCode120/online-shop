@@ -1,6 +1,3 @@
-import { useStateContext } from '@/context/StateContext';
-const { calculateDiscount } = useStateContext();
-
 const stripe = require('stripe')(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
@@ -31,7 +28,7 @@ export default async function handler(req, res) {
                   name: item.name,
                   images: [newImage]
                 },
-                unit_amount: Math.floor(Number(calculateDiscount(item.price, item.discount)) * 100),
+                unit_amount: Math.floor((item.price - item.price / 100 * item.discount).toFixed(2) * 100),
               },
               adjustable_quantity: {
                 enabled: true,
