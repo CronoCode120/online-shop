@@ -298,7 +298,7 @@ body {
   width: 40vw;
 }
 
-.product-details > div {
+.product-buttons {
   width: 100%;
   display: flex;
   align-items: center;
@@ -723,6 +723,7 @@ body {
   width: max(60vw, 600px);
   border: 1px solid black;
   border-radius: 20px;
+  box-shadow: 0 0 4px 1px;
 }
 
 .result-info {
@@ -800,4 +801,37 @@ body {
 
 .result-btn.add:hover {
   background-color: #887FEC;
+}
+
+/* Discount */
+
+.prev-price {
+  text-decoration: line-through black;
+  color: rgb(72, 72, 72);
+  margin-right: 20px;
+}
+
+.prev-price2 {
+  text-decoration: line-through white;
+  color: rgb(182, 182, 182);
+  font-size: 12px;
+  margin: 0;
+}
+
+.discount-price {
+  color: rgb(207, 48, 48);
+}
+
+.discount-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.discount-container2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
