@@ -143,6 +143,11 @@ const StateContext = ({ children }) => {
         setSearchKey(newKey);
         sessionStorage.setItem('searchKey', newKey);
     }
+    
+    const calculateDiscount = (price, discount) => {
+        let newPrice = Math.floor((price - (price / 100 * discount)) * 100) / 100;
+        return newPrice.toFixed(2);
+    }
 
     return (
         <Context.Provider value={{
@@ -162,7 +167,8 @@ const StateContext = ({ children }) => {
             setTotalPrice,
             setTotalQuantities,
             searchKey,
-            changeSearchKey
+            changeSearchKey,
+            calculateDiscount
         }}>
             {children}
         </Context.Provider>
