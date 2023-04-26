@@ -14,8 +14,8 @@ const StateContext = ({ children }) => {
     const [qty, setQty] = useState(1);
     
     const calculateDiscount = (price, discount) => {
-        let newPrice = Math.floor((price - (price / 100 * discount)) * 100) / 100;
-        return newPrice.toFixed(2);
+        let newPrice = Math.round((price - (price / 100 * discount)) * 100) / 100;
+        return newPrice;
     }
 
     useEffect(() => {
@@ -84,7 +84,7 @@ const StateContext = ({ children }) => {
             }
 
         setCartItems(newCartItems);
-        setTotalPrice(Number(newTotalPrice.toFixed(2)));
+        setTotalPrice(newTotalPrice);
         setTotalQuantities(newTotalQuantities);
 
         toast.success('Added to Cart', {
