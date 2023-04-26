@@ -45,35 +45,39 @@ const StateContext = ({ children }) => {
     }, []);
 
     const addToCart = (product, quantity) => {
-        let checkProductInCart = cartItems.find(item => item._id == product._id);
-        if (checkProductInCart) {
-            const updatedCartItems = cartItems.map(cartProduct => {
-                if(cartProduct._id === product._id) {
-                    return {
-                    ...cartProduct,
-                    quantity: cartProduct.quantity + quantity
-                    };
-                } else {
-                    return cartProduct;
-                }
-            })
+        const index = cartItems.findIndex(item => item._id === product._id);
+        const newCartItems = [...cartItems];
+        let newTotalPrice = totalPrice;
+        let newTotalQuantities = totalQuantities;
 
-            setCartItems(updatedCartItems);
-        } else {
-            product.quantity = quantity;
+        if (index !== -1) {
+            newCartItems[index].quantity += quantity;
 
-            setCartItems([...cartItems, {...product}]);
-        }
-        setTotalPrice(prevTotalPrice => {
-            let newPrice;
-            if(product.discount) {
-                newPrice = prevTotalPrice + Number(calculateDiscount(product.price, product.discount)) * product.quantity;
+            if (product.discount) {
+            newTotalPrice += calculateDiscount(product.price, product.discount) * quantity;
             } else {
-                newPrice = prevTotalPrice + Number(product.price.toFixed(2)) * product.quantity;
+            newTotalPrice += product.price * quantity;
             }
-                return Number(newPrice.toFixed(2));
+        } else {
+            newCartItems.push({...product, quantity});
+            newTotalPrice += product.price * quantity;
+        }
+
+        newTotalQuantities += quantity;
+
+        setCartItems(newCartItems);
+        setTotalPrice(Number(newTotalPrice.toFixed(2)));
+        setTotalQuantities(newTotalQuantities);
+
+        toast.success('Added to Cart', {
+            style: {
+            fontFamily: '"Quicksand", sans-serif',
+            fontWeight: '600',
+            borderRadius: '30px',
+            boxShadow: '0 0 5px 2px black'
+            }
         });
-        setTotalQuantities(prevTotalQuantities => prevTotalQuantities + quantity);
+   };
 
         toast.success('Added to Cart', {
             style: {
