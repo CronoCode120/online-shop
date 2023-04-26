@@ -75,7 +75,7 @@ const ProductPage = ({ curProduct, products }) => {
               <FontAwesomeIcon icon={faStar} />
               <p>(0)</p>
           </div>
-          <p style={{'fontFamily':'"Poppins", sans-serif', 'fontWeight': '600', 'margin-top':'40px'}}>Description:</p>
+          <p style={{'fontFamily':'"Poppins", sans-serif', 'fontWeight': '600', 'marginTop':'40px'}}>Description:</p>
           <p style={{'fontFamily': '"Quicksand", sans-serif'}}>{details}</p>
           {discount ? (
             <div className='discount-container'>
