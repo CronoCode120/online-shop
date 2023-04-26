@@ -22,7 +22,6 @@ const StateContext = ({ children }) => {
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
         if (storedCartItems && storedCartItems.length > 0) {
             setCartItems(storedCartItems);
-            console.log(cartItems);
 
             let storedPrice = 0;
             let storedQuantities = 0;
@@ -37,6 +36,8 @@ const StateContext = ({ children }) => {
             setTotalPrice(Number(storedPrice));
             setTotalQuantities(storedQuantities);
         }
+        console.log(cartItems);
+        console.log(localStorage.getItem('cartItems'));
 
         if (sessionStorage.getItem('searchKey')) {
             setSearchKey(sessionStorage.getItem('searchKey'));
@@ -59,7 +60,6 @@ const StateContext = ({ children }) => {
 
             setCartItems([...cartItems, {...product}]);
         }
-        console.log(cartItems);
         setTotalPrice(prevTotalPrice => {
             let newPrice;
             if(product.discount) {
