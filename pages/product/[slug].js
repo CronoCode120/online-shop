@@ -13,6 +13,11 @@ const ProductPage = ({ curProduct, products }) => {
   const { qty, incQty, decQty, setQty, addToCart, calculateDiscount } = useStateContext();
   const [index, setIndex] = useState(0);
 
+  let mobile;
+  useEffect(() => {
+    mobile = window.matchMedia('(any-pointer:coarse)').matches;
+  }, []);
+
   useEffect(() => {
     let slide = document.querySelector(".showcase");
     slide.scrollLeft = 0;
@@ -49,8 +54,6 @@ const ProductPage = ({ curProduct, products }) => {
                   <img
                   src={urlFor(img)}
                   alt='A picture of the product'
-                  width={100}
-                  height={100}
                   key={urlFor(img)}
                   onMouseEnter={() => {
                     setIndex(i)
@@ -130,8 +133,12 @@ const ProductPage = ({ curProduct, products }) => {
       <div className='other-products'>
         <h2>You may like these products</h2>
         <div className='showcase'>
-          <FontAwesomeIcon className='move-left' icon={faCircleChevronLeft} size='2xl' onClick={moveLeft} />
-          <FontAwesomeIcon className='move-right' icon={faCircleChevronRight} size='2xl' onClick={moveRight} />
+          {!mobile && (
+            <FontAwesomeIcon className='move-left' icon={faCircleChevronLeft} size='2xl' onClick={moveLeft} />
+          )}
+          {!mobile && (
+            <FontAwesomeIcon className='move-right' icon={faCircleChevronRight} size='2xl' onClick={moveRight} />
+          )}
           {products?.filter(el => el._id !== _id).map((item) => (
             <Link key={item._id} className='link' href={`/product/${item.slug.current}`}>
               <img
