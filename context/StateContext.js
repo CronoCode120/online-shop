@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
-import added from '../public/cart-arrow-down-solid.svg'
+import added from '../public/cart-arrow-down-solid.svg';
 
 const Context = createContext();
 
@@ -14,8 +14,8 @@ const StateContext = ({ children }) => {
     const [qty, setQty] = useState(1);
     
     const calculateDiscount = (price, discount) => {
-        let newPrice = Math.round((price - (price / 100 * discount)) * 100) / 100;
-        return newPrice;
+        let newPrice = Math.floor((price - (price / 100 * discount)) * 100) / 100;
+        return newPrice.toFixed(2);
     }
 
     useEffect(() => {
@@ -68,9 +68,13 @@ const StateContext = ({ children }) => {
         let checkProductInCart = cartItems.find(item => item._id == product._id);
         if (checkProductInCart) {
             const updatedCartItems = cartItems.map(cartProduct => {
-                if(cartProduct._id === product._id) return {
+                if(cartProduct._id === product._id) {
+                    return {
                     ...cartProduct,
                     quantity: cartProduct.quantity + quantity
+                    };
+                } else {
+                    return cartProduct;
                 }
             })
 
