@@ -12,11 +12,17 @@ const StateContext = ({ children }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQuantities, setTotalQuantities] = useState(0);
     const [qty, setQty] = useState(1);
+    
+    const calculateDiscount = (price, discount) => {
+        let newPrice = Math.floor((price - (price / 100 * discount)) * 100) / 100;
+        return newPrice.toFixed(2);
+    }
 
     useEffect(() => {
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
         if (storedCartItems && storedCartItems.length > 0) {
             setCartItems(storedCartItems);
+            console.log(localStorage.getItem('cartItems'));
 
             let storedPrice = 0;
             let storedQuantities = 0;
@@ -36,6 +42,7 @@ const StateContext = ({ children }) => {
             const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
             if (storedCartItems && storedCartItems.length > 0) {
                 setCartItems(storedCartItems);
+                console.log(localStorage.getItem('cartItems'));
 
                 let storedPrice = 0;
                 let storedQuantities = 0;
@@ -171,11 +178,6 @@ const StateContext = ({ children }) => {
     const changeSearchKey = (newKey) => {
         setSearchKey(newKey);
         sessionStorage.setItem('searchKey', newKey);
-    }
-    
-    const calculateDiscount = (price, discount) => {
-        let newPrice = Math.floor((price - (price / 100 * discount)) * 100) / 100;
-        return newPrice.toFixed(2);
     }
 
     return (
