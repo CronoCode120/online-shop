@@ -48,9 +48,11 @@ const StateContext = ({ children }) => {
         let checkProductInCart = cartItems.find(item => item._id == product._id);
         if (checkProductInCart) {
             const updatedCartItems = cartItems.map(cartProduct => {
-                if(cartProduct._id === product._id) return {
+                if(cartProduct._id === product._id) {
+                    return {
                     ...cartProduct,
                     quantity: cartProduct.quantity + quantity
+                    };
                 } else {
                     return cartProduct;
                 }
