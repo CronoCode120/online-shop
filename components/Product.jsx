@@ -20,7 +20,7 @@ const Product = ({ product: { image, name, price, slug, discount } }) => {
             <p className='product-name'>{name}</p>
             {discount ? (
               <div>
-                <p style={{'margin-bottom':'0'}}>$<span className='discount-price'>{calculateDiscount(price, discount)}</span></p>
+                <p style={{'margin-bottom':'0'}}>$<span className='discount-price'>{calculateDiscount(price, discount).toFixed(2)}</span></p>
                 <p className='prev-price' style={{'margin':'0', 'fontSize':'10px', 'textAlign':'right'}}>${price.toFixed(2)}</p>
               </div>
             ) : (
