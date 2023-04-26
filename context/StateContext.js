@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
-import added from '../public/cart-arrow-down-solid.svg'
+import added from '../public/cart-arrow-down-solid.svg';
 
 const Context = createContext();
 
@@ -38,29 +38,6 @@ const StateContext = ({ children }) => {
             setTotalQuantities(storedQuantities);
         }
 
-        const handleStorageChange = () => {
-            const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
-            if (storedCartItems && storedCartItems.length > 0) {
-                setCartItems(storedCartItems);
-                console.log(localStorage.getItem('cartItems'));
-
-                let storedPrice = 0;
-                let storedQuantities = 0;
-                storedCartItems.forEach(item => {
-                    if(item.discount) {
-                        storedPrice += Math.round(Number(calculateDiscount(item.price, item.discount)) * item.quantity * 100) / 100;
-                    } else {
-                        storedPrice += Math.round(item.price * item.quantity * 100) / 100;
-                    }
-                    storedQuantities += item.quantity;
-                });
-                setTotalPrice(Number(storedPrice));
-                setTotalQuantities(storedQuantities);
-            }
-        }
-
-        window.addEventListener('storage', handleStorageChange);
-
         if (sessionStorage.getItem('searchKey')) {
             setSearchKey(sessionStorage.getItem('searchKey'));
         }
@@ -82,6 +59,7 @@ const StateContext = ({ children }) => {
 
             setCartItems([...cartItems, {...product}]);
         }
+        console.log(cartItems);
         setTotalPrice(prevTotalPrice => {
             let newPrice;
             if(product.discount) {
@@ -101,7 +79,6 @@ const StateContext = ({ children }) => {
                 boxShadow: '0 0 5px 2px black'
             }
         });
-        console.log(totalPrice);
     }
 
     const removeFromCart = (product) => {
