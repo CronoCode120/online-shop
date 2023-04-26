@@ -72,18 +72,16 @@ const StateContext = ({ children }) => {
 
         if (index !== -1) {
             newCartItems[index].quantity += quantity;
-            
-            if (product.discount) {
+        } else {
+            newCartItems.push({...product, quantity});
+        }
+
+        newTotalQuantities += quantity;
+        if (product.discount) {
             newTotalPrice += calculateDiscount(product.price, product.discount) * quantity;
             } else {
             newTotalPrice += product.price * quantity;
             }
-        } else {
-            newCartItems.push({...product, quantity});
-            newTotalPrice += product.price * quantity;
-        }
-
-        newTotalQuantities += quantity;
 
         setCartItems(newCartItems);
         setTotalPrice(Number(newTotalPrice.toFixed(2)));
