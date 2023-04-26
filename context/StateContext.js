@@ -77,17 +77,7 @@ const StateContext = ({ children }) => {
             boxShadow: '0 0 5px 2px black'
             }
         });
-   };
-
-        toast.success('Added to Cart', {
-            style: {
-                fontFamily: '"Quicksand", sans-serif',
-                fontWeight: '600',
-                borderRadius: '30px',
-                boxShadow: '0 0 5px 2px black'
-            }
-        });
-    }
+    };
 
     const removeFromCart = (product) => {
         let foundProduct = cartItems.find(item => item._id == product._id);
