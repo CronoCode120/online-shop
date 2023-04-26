@@ -42,7 +42,7 @@ const ProductList = ({ searchKey, products }) => {
             {product.discount ? (
               <div className='discount-container2'>
                 <p className='prev-price2' style={{'fontFamily':'"Poppins", sans-serif'}}>${product.price.toFixed(2)}</p>
-                <h4 className='discount-price' style={{'fontFamily':'"Poppins", sans-serif', 'margin':'0'}}>${calculateDiscount(product.price, product.discount)}</h4>
+                <h4 className='discount-price' style={{'fontFamily':'"Poppins", sans-serif', 'margin':'0'}}>${calculateDiscount(product.price, product.discount).toFixed(2)}</h4>
               </div>
             ) : (
               <h4>${product.price.toFixed(2)}</h4>
