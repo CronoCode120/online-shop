@@ -73,7 +73,7 @@ const Cart = () => {
                       {item.discount ? (
                         <p className='discount-container' style={{'fontWeight':'600', 'fontFamily':'"Poppins", sans-serif', 'fontSize':'16px', 'justifyContent':'flex-end !important'}}><span className='prev-price'>${item.price.toFixed(2)}</span><span className='discount-price'>${calculateDiscount(item.price, item.discount)}</span></p>
                       ) : (
-                        <p style={{'fontWeight':'600', 'fontFamily':'"Poppins", sans-serif', 'fontSize':'16px'}}>${item.price}</p>
+                        <p style={{'fontWeight':'600', 'fontFamily':'"Poppins", sans-serif', 'fontSize':'16px'}}>${item.price.toFixed(2)}</p>
                       )}
                       <div className='quant-selector'>
                         <FontAwesomeIcon icon={faCircleMinus} size='xl' onClick={() => toggleCartItemQty(item, 'dec')} style={{"userSelect": "none", "cursor": "pointer", 'color': 'white'}} />
