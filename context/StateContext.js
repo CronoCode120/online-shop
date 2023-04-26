@@ -27,17 +27,37 @@ const StateContext = ({ children }) => {
             let storedQuantities = 0;
             storedCartItems.forEach(item => {
                 if(item.discount) {
-                    storedPrice += Math.round(Number(calculateDiscount(item.price, item.discount)) * item.quantity * 100) / 100;
+                    storedPrice += Math.round(calculateDiscount(item.price, item.discount) * item.quantity * 100) / 100;
                 } else {
                     storedPrice += Math.round(item.price * item.quantity * 100) / 100;
                 }
                 storedQuantities += item.quantity;
             });
-            setTotalPrice(Number(storedPrice));
+            setTotalPrice(storedPrice);
             setTotalQuantities(storedQuantities);
         }
-        console.log(cartItems);
-        console.log(localStorage.getItem('cartItems'));
+
+        const handleStorageChange = () => {
+            const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
+            if (storedCartItems && storedCartItems.length > 0) {
+                setCartItems(storedCartItems);
+
+                let storedPrice = 0;
+                let storedQuantities = 0;
+                storedCartItems.forEach(item => {
+                    if(item.discount) {
+                        storedPrice += Math.round(calculateDiscount(item.price, item.discount) * item.quantity * 100) / 100;
+                    } else {
+                        storedPrice += Math.round(item.price * item.quantity * 100) / 100;
+                    }
+                    storedQuantities += item.quantity;
+                });
+                setTotalPrice(storedPrice);
+                setTotalQuantities(storedQuantities);
+            }
+        }
+
+        window.addEventListener('storage', handleStorageChange);
 
         if (sessionStorage.getItem('searchKey')) {
             setSearchKey(sessionStorage.getItem('searchKey'));
@@ -52,7 +72,7 @@ const StateContext = ({ children }) => {
 
         if (index !== -1) {
             newCartItems[index].quantity += quantity;
-
+            
             if (product.discount) {
             newTotalPrice += calculateDiscount(product.price, product.discount) * quantity;
             } else {
@@ -87,11 +107,11 @@ const StateContext = ({ children }) => {
         setTotalPrice(prevTotalPrice => {
             let newPrice;
             if(product.discount) {
-                newPrice = prevTotalPrice - Number(calculateDiscount(product.price, product.discount)) * product.quantity;
+                newPrice = prevTotalPrice - calculateDiscount(product.price, product.discount) * product.quantity;
             } else {
                 newPrice = prevTotalPrice - product.price * product.quantity;
             }
-            return Number(newPrice.toFixed(2));
+            return newPrice;
         });
         setTotalQuantities(prevTotalQuantities => prevTotalQuantities - product.quantity);
     }
@@ -106,11 +126,11 @@ const StateContext = ({ children }) => {
                 setTotalPrice(prevTotalPrice => {
                     let newPrice;
                     if(foundProduct.discount) {
-                        newPrice = prevTotalPrice - Number(calculateDiscount(foundProduct.price, foundProduct.discount));
+                        newPrice = prevTotalPrice - calculateDiscount(foundProduct.price, foundProduct.discount);
                     } else {
                         newPrice = prevTotalPrice - foundProduct.price;
                     }
-                    return Number(newPrice.toFixed(2));
+                    return newPrice;
                 });
 
                 let updatedProduct = {...foundProduct, quantity: --foundProduct.quantity};
@@ -122,11 +142,11 @@ const StateContext = ({ children }) => {
             setTotalPrice(prevTotalPrice => {
                 let newPrice;
                 if(foundProduct.discount) {
-                    newPrice = prevTotalPrice + Number(calculateDiscount(foundProduct.price, foundProduct.discount));
+                    newPrice = prevTotalPrice + calculateDiscount(foundProduct.price, foundProduct.discount);
                 } else {
                     newPrice = prevTotalPrice + foundProduct.price;
                 }
-                return Number(newPrice.toFixed(2));
+                return newPrice;
             });
 
             let updatedProduct = {...foundProduct, quantity: ++foundProduct.quantity};
