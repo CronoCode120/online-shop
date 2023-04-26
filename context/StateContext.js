@@ -12,6 +12,11 @@ const StateContext = ({ children }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQuantities, setTotalQuantities] = useState(0);
     const [qty, setQty] = useState(1);
+    
+    const calculateDiscount = (price, discount) => {
+        let newPrice = Math.round((price - (price / 100 * discount)) * 100) / 100;
+        return newPrice;
+    }
 
     useEffect(() => {
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
@@ -170,11 +175,6 @@ const StateContext = ({ children }) => {
     const changeSearchKey = (newKey) => {
         setSearchKey(newKey);
         sessionStorage.setItem('searchKey', newKey);
-    }
-    
-    const calculateDiscount = (price, discount) => {
-        let newPrice = Math.round((price - (price / 100 * discount)) * 100) / 100;
-        return newPrice;
     }
 
     return (
