@@ -22,7 +22,6 @@ const StateContext = ({ children }) => {
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
         if (storedCartItems && storedCartItems.length > 0) {
             setCartItems(storedCartItems);
-            console.log(localStorage.getItem('cartItems'));
 
             let storedPrice = 0;
             let storedQuantities = 0;
