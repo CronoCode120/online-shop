@@ -80,7 +80,7 @@ const ProductPage = ({ curProduct, products }) => {
           {discount ? (
             <div className='discount-container'>
               <p className='prev-price' style={{'fontFamily':'"Poppins", sans-serif'}}>${price.toFixed(2)}</p>
-              <h2 className='discount-price' style={{'fontFamily':'"Poppins", sans-serif'}}>${calculateDiscount(price, discount)} <span style={{'color':'black'}}>(-{discount}%)</span></h2>
+              <h2 className='discount-price' style={{'fontFamily':'"Poppins", sans-serif'}}>${calculateDiscount(price, discount).toFixed(2)} <span style={{'color':'black'}}>(-{discount}%)</span></h2>
             </div>
           ) : (
             <h2 style={{'fontFamily':'"Poppins", sans-serif'}}>${price.toFixed(2)}</h2>
