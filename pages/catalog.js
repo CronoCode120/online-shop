@@ -5,8 +5,18 @@ import { useState } from 'react';
 import { client } from '@/lib/client';
 
 const Catalog = ({ products }) => {
-  const { searchKey } = useStateContext();
+  const { searchKey, calculateDiscount } = useStateContext();
   const [ sortOrder, setSortOrder ] = useState('LtH');
+  
+  const updatedProducts = [];
+  products.forEach(product => {
+    if(product.discount) {
+      let newPrice = calculateDiscount(product.price, product.discount);
+      updatedProducts.push({...product, price: price});
+    } else {
+      updatedProducts.push(product);
+    }
+  });
 
   return (
     <div>
@@ -18,7 +28,7 @@ const Catalog = ({ products }) => {
           </select>
         </div>
         <div className='results-container'>
-            <ProductList searchKey={searchKey} products={sortOrder === 'LtH' ? products.sort((a, b) => a.price - b.price) : products.sort((a, b) => b.price - a.price)} />
+            <ProductList searchKey={searchKey} products={sortOrder === 'LtH' ? updatedProducts.sort((a, b) => a.price - b.price) : updatedProducts.sort((a, b) => b.price - a.price)} />
         </div>
     </div>
   )
